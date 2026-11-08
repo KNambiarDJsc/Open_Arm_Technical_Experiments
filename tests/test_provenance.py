@@ -192,7 +192,7 @@ def test_conversion_options_recorded(export, format_):
     }
 
 
-def test_same_source_at_another_rate_keeps_source_identity(export):
+def test_same_source_with_other_options_keeps_source_identity(export):
     default = _load(export("lerobot_v2.1"))
     resampled = _load(export("lerobot_v2.1", smoothing_cutoff=0))
     assert resampled["source"] == default["source"]
