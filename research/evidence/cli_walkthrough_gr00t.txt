@@ -1,0 +1,122 @@
+$ openarm-dataset-convert <source> <out> --format gr00t --success-only
+exit=0
+$ cat <out>/meta/openarm.json
+{
+    "schema_version": 1,
+    "generator": {
+        "name": "openarm_dataset",
+        "version": "0.4.0"
+    },
+    "source": {
+        "version": "0.4.0",
+        "operation_type": "teleop",
+        "frequencies": {
+            "action": {
+                "arms": {
+                    "left": 250.0,
+                    "right": 250.0
+                },
+                "lifter": 250.0
+            },
+            "cameras": {
+                "ceiling": 30.303030303030305,
+                "head_left": 30.303030303030305,
+                "head_right": 30.303030303030305,
+                "wrist_left": 30.303030303030305,
+                "wrist_right": 30.303030303030305
+            },
+            "obs": {
+                "arms": {
+                    "left": 250.0,
+                    "right": 250.0
+                },
+                "lifter": 250.0
+            }
+        },
+        "equipment": {
+            "embodiments": {
+                "arms": {
+                    "id": "OpenArm",
+                    "version": "2.0"
+                },
+                "lifter": {
+                    "home": "bottom",
+                    "id": "OpenArmCellLifter",
+                    "lead_length": 5.0,
+                    "mechanism": "lead_screw",
+                    "stroke": 300,
+                    "unit": "mm",
+                    "version": "1.0"
+                }
+            },
+            "id": "OpenArm-Rig-7-Survey",
+            "leader": {
+                "ker": {
+                    "firmware_version": "9.8.7-survey",
+                    "hardware_version": "1.0",
+                    "id": "OpenArmKER"
+                }
+            },
+            "perceptions": {
+                "cameras": {
+                    "ceiling": {},
+                    "head_left": {},
+                    "head_right": {},
+                    "wrist_left": {},
+                    "wrist_right": {}
+                }
+            },
+            "version": "2.3-survey"
+        },
+        "tasks": [
+            {
+                "prompt": "Pick the cube.",
+                "description": "Task-Description-Survey"
+            }
+        ],
+        "num_episodes": 3
+    },
+    "conversion": {
+        "fps": 30,
+        "smoothing_cutoff": 1.0,
+        "state": "qpos",
+        "arm_dynamics": false,
+        "success_only": true,
+        "valid_only": false
+    },
+    "withheld": [
+        "location",
+        "operator",
+        "site_notes"
+    ],
+    "episodes": [
+        {
+            "episode_index": 0,
+            "task_index": 0,
+            "source": {
+                "index": 1,
+                "id": "ep-0007",
+                "success": true,
+                "task_index": 0,
+                "valid": false
+            }
+        },
+        {
+            "episode_index": 1,
+            "task_index": 0,
+            "source": {
+                "index": 2,
+                "id": "ep-0100",
+                "success": true,
+                "task_index": 0,
+                "valid": true
+            }
+        }
+    ]
+}
+$ load_provenance + LeRobotDataset (lerobot 0.3.3)
+LeRobotDataset episodes: 2 | provenance episodes: 2 | withheld: ['location', 'operator', 'site_notes']
+exported episode 0 <- source id ep-0007 (metadata position 1) | frame episode_index=0 task='Pick the cube.'
+exported episode 1 <- source id ep-0100 (metadata position 2) | frame episode_index=1 task='Pick the cube.'
+$ openarm-dataset-convert <source> <out> --format openarm --include-sensitive-metadata
+openarm-dataset-convert: error: --include-sensitive-metadata applies only to the lerobot_v2.1, lerobot_v3.0 and gr00t formats

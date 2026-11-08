@@ -1,0 +1,19 @@
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v3.0-episodes0-options0]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v3.0-episodes1-options1]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v3.0-episodes2-options2]
+FAILED tests/test_provenance.py::test_source_identity_survives_export[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_dataset_level_identity[lerobot_v3.0] - ...
+FAILED tests/test_provenance.py::test_conversion_options_recorded[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v3.0-all] - Mod...
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v3.0-success_only]
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v3.0-valid_only]
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v3.0-success_and_valid_only]
+FAILED tests/test_provenance.py::test_filtered_episodes_are_not_listed[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_mapping_matches_exported_data[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_numeric_noncontiguous_ids[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_sensitive_fields_withheld_by_default[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_sensitive_fields_opt_in[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_provenance_is_deterministic[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_only_the_sidecar_is_added[lerobot_v3.0]
+FAILED tests/test_provenance.py::test_lerobot_loads_export_with_provenance[lerobot_v3.0]
+15 failed, 3 passed, 60 deselected in 18.71s

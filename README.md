@@ -253,7 +253,8 @@ openarm-dataset-convert <input> <output> \
     [--success-only]           # lerobot/gr00t only \
     [--valid-only]             # exclude episodes marked invalid \
     [--state {qpos,pose,rot6d}] # default qpos (lerobot/gr00t only) \
-    [--arm-dynamics]           # lerobot only
+    [--arm-dynamics]           # lerobot only \
+    [--include-sensitive-metadata] # lerobot/gr00t only
 ```
 
 The `--fps`, `--smoothing-cutoff`, `--train-split`, `--success-only`, and
@@ -293,6 +294,24 @@ sampled on the same timeline and with the same smoothing as
 recorded it, so check `meta/info.json` before relying on them. Their
 statistics are included in `meta/stats.json` and the per-episode stats. The
 `gr00t` output does not include them yet.
+
+The `lerobot_v2.1`, `lerobot_v3.0` and `gr00t` outputs also contain
+`meta/openarm.json`, which records where the export came from. No other
+file of the export changes, and LeRobot ignores it:
+
+| Key | Content |
+|---|---|
+| `schema_version` | `1` |
+| `source` | The OpenArm format `version`, `operation_type`, `equipment` (including embodiment and leader versions), `frequencies`, `tasks` (prompt and description) and `num_episodes` of the source dataset; a field absent in the source is absent here |
+| `conversion` | `fps`, `smoothing_cutoff`, `state`, `arm_dynamics`, `success_only`, `valid_only` |
+| `episodes` | For every exported `episode_index`, in order: its exported `task_index` and the `source` episode's `id`, `index` (position in `metadata.yaml`), `success`, `task_index` and `valid` flag |
+| `withheld` | Names of source fields that are not exported |
+
+`operator` and `location` are withheld unless
+`--include-sensitive-metadata` (`include_sensitive_metadata=True` in
+Python) is given. Fields this package does not know are never exported,
+only named in `withheld`. Read the file with
+`openarm_dataset.provenance.load_provenance(path)`, which also checks it.
 
 Upload a dataset to the Hugging Face Hub:
 

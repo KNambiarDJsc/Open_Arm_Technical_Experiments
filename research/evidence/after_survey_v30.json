@@ -1,0 +1,187 @@
+{
+  "source": "<OUT_DIR>/source",
+  "formats": {
+    "lerobot_v3.0/all": {
+      "files": [
+        "data/chunk-000/file-000.parquet",
+        "meta/episodes/chunk-000/file-000.parquet",
+        "meta/info.json",
+        "meta/openarm.json",
+        "meta/stats.json",
+        "meta/tasks.parquet"
+      ],
+      "found": {
+        "episodes[0].id": [
+          "meta/openarm.json"
+        ],
+        "episodes[1].id": [
+          "meta/openarm.json"
+        ],
+        "episodes[2].id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.arms.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.home": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.mechanism": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.unit": [
+          "meta/openarm.json"
+        ],
+        "equipment.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.firmware_version": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.version": [
+          "meta/openarm.json"
+        ],
+        "location": [],
+        "operation_type": [
+          "meta/openarm.json"
+        ],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [
+          "meta/openarm.json"
+        ],
+        "tasks[0].prompt": [
+          "meta/episodes/chunk-000/file-000.parquet",
+          "meta/openarm.json",
+          "meta/tasks.parquet"
+        ]
+      }
+    },
+    "lerobot_v3.0/success_only": {
+      "files": [
+        "data/chunk-000/file-000.parquet",
+        "meta/episodes/chunk-000/file-000.parquet",
+        "meta/info.json",
+        "meta/openarm.json",
+        "meta/stats.json",
+        "meta/tasks.parquet"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [
+          "meta/openarm.json"
+        ],
+        "episodes[2].id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.arms.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.home": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.mechanism": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.unit": [
+          "meta/openarm.json"
+        ],
+        "equipment.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.firmware_version": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.version": [
+          "meta/openarm.json"
+        ],
+        "location": [],
+        "operation_type": [
+          "meta/openarm.json"
+        ],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [
+          "meta/openarm.json"
+        ],
+        "tasks[0].prompt": [
+          "meta/episodes/chunk-000/file-000.parquet",
+          "meta/openarm.json",
+          "meta/tasks.parquet"
+        ]
+      }
+    },
+    "lerobot_v3.0/valid_only": {
+      "files": [
+        "data/chunk-000/file-000.parquet",
+        "meta/episodes/chunk-000/file-000.parquet",
+        "meta/info.json",
+        "meta/openarm.json",
+        "meta/stats.json",
+        "meta/tasks.parquet"
+      ],
+      "found": {
+        "episodes[0].id": [
+          "meta/openarm.json"
+        ],
+        "episodes[1].id": [],
+        "episodes[2].id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.arms.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.home": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.mechanism": [
+          "meta/openarm.json"
+        ],
+        "equipment.embodiments.lifter.unit": [
+          "meta/openarm.json"
+        ],
+        "equipment.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.firmware_version": [
+          "meta/openarm.json"
+        ],
+        "equipment.leader.ker.id": [
+          "meta/openarm.json"
+        ],
+        "equipment.version": [
+          "meta/openarm.json"
+        ],
+        "location": [],
+        "operation_type": [
+          "meta/openarm.json"
+        ],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [
+          "meta/openarm.json"
+        ],
+        "tasks[0].prompt": [
+          "meta/episodes/chunk-000/file-000.parquet",
+          "meta/openarm.json",
+          "meta/tasks.parquet"
+        ]
+      }
+    }
+  }
+}
