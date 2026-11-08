@@ -276,9 +276,9 @@ def test_numeric_noncontiguous_ids(tmp_path, format_):
     # The repository fixture's ids are "0" and "3".
     Dataset(QPOS_FIXTURE).write(tmp_path, format=format_, fps=FPS, success_only=True)
     episodes = _load(tmp_path)["episodes"]
-    assert [(e["episode_index"], e["source"]["index"], e["source"]["id"]) for e in episodes] == [
-        (0, 1, "3")
-    ]
+    assert [
+        (e["episode_index"], e["source"]["index"], e["source"]["id"]) for e in episodes
+    ] == [(0, 1, "3")]
 
 
 def test_duplicate_source_ids_stay_distinguishable(tmp_path):
@@ -290,7 +290,10 @@ def test_duplicate_source_ids_stay_distinguishable(tmp_path):
     )
     Dataset(source).write(tmp_path / "out", format="lerobot_v2.1", fps=FPS)
     episodes = _load(tmp_path / "out")["episodes"]
-    assert [(e["source"]["index"], e["source"]["id"], e["source"]["success"]) for e in episodes] == [
+    assert [
+        (e["source"]["index"], e["source"]["id"], e["source"]["success"])
+        for e in episodes
+    ] == [
         (0, "3", True),
         (1, "3", False),
     ]
@@ -329,7 +332,10 @@ def test_unknown_episode_and_task_fields_withheld(tmp_path):
     with open(source / "metadata.yaml", "w") as f:
         yaml.safe_dump(meta, f)
     Dataset(source).write(
-        tmp_path / "out", format="lerobot_v2.1", fps=FPS, include_sensitive_metadata=True
+        tmp_path / "out",
+        format="lerobot_v2.1",
+        fps=FPS,
+        include_sensitive_metadata=True,
     )
     provenance = _load(tmp_path / "out")
     assert provenance["withheld"] == ["episodes[].notes", "site_notes", "tasks[].owner"]
@@ -347,7 +353,10 @@ def test_dataset_without_sensitive_fields(tmp_path):
     with open(source / "metadata.yaml", "w") as f:
         yaml.safe_dump(meta, f)
     Dataset(source).write(
-        tmp_path / "out", format="lerobot_v2.1", fps=FPS, include_sensitive_metadata=True
+        tmp_path / "out",
+        format="lerobot_v2.1",
+        fps=FPS,
+        include_sensitive_metadata=True,
     )
     provenance = _load(tmp_path / "out")
     assert provenance["withheld"] == []
@@ -361,7 +370,9 @@ def test_dataset_without_sensitive_fields(tmp_path):
 def test_missing_optional_fields_are_not_fabricated(tmp_path):
     # 0.1.0 records neither operation_type (Metadata defaults it to "teleop")
     # nor frequencies nor a leader.
-    Dataset(FIXTURE_DIR / "dataset_0.1.0").write(tmp_path, format="lerobot_v2.1", fps=FPS)
+    Dataset(FIXTURE_DIR / "dataset_0.1.0").write(
+        tmp_path, format="lerobot_v2.1", fps=FPS
+    )
     origin = _load(tmp_path)["source"]
     assert origin["version"] == "0.1.0"
     assert "operation_type" not in origin
@@ -397,7 +408,9 @@ def test_yaml_dates_are_written_as_iso_strings(tmp_path):
     with open(source / "metadata.yaml", "w") as f:
         yaml.safe_dump(meta, f)
     Dataset(source).write(tmp_path / "out", format="lerobot_v2.1", fps=FPS)
-    assert _load(tmp_path / "out")["source"]["equipment"]["calibrated_on"] == "2026-01-02"
+    assert (
+        _load(tmp_path / "out")["source"]["equipment"]["calibrated_on"] == "2026-01-02"
+    )
 
 
 @pytest.mark.parametrize("value", (b"\x00\x01", float("nan")))
@@ -448,7 +461,10 @@ def test_source_metadata_is_not_mutated(tmp_path):
     meta = Metadata(source / "metadata.yaml")
     before = copy.deepcopy(meta.data)
     Dataset(source, meta=meta).write(
-        tmp_path / "out", format="lerobot_v2.1", fps=FPS, include_sensitive_metadata=True
+        tmp_path / "out",
+        format="lerobot_v2.1",
+        fps=FPS,
+        include_sensitive_metadata=True,
     )
     assert meta.data == before
     assert (source / "metadata.yaml").read_bytes() == raw

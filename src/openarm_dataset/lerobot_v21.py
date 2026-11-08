@@ -27,6 +27,7 @@ from .dataset import (
 )
 from .ffmpeg import VIDEO_PIX_FMT, encode_mp4
 from .metadata import OpenArm
+from .provenance import build_provenance, write_provenance
 
 ROBOT_TYPE = "openarm_bimanual"
 CHUNK_SIZE = 1000
@@ -796,6 +797,7 @@ def to_lerobotv21(
     state: str = "qpos",
     valid_only: bool = False,
     arm_dynamics: bool = False,
+    include_sensitive_metadata: bool = False,
 ) -> None:
     """Convert the given dataset to LeRobot v2.1 format and save to the specified output directory.
 
@@ -805,6 +807,11 @@ def to_lerobotv21(
     also exported as ``observation.velocity`` and ``observation.torque``,
     each only when every exported episode recorded it. A
     ``smoothing_cutoff`` of 0 or None disables smoothing.
+
+    The OpenArm metadata, the conversion options and the source of every
+    exported episode are written to ``meta/openarm.json`` (see
+    ``provenance``). ``operator`` and ``location`` are included only with
+    ``include_sensitive_metadata``.
     """
     if not (0.0 <= train_split <= 1.0):
         raise ValueError(f"train_split must be between 0 and 1, got {train_split}")
@@ -831,6 +838,22 @@ def to_lerobotv21(
 
     # build remaps from original to contiguous output indices (identity unless filtered)
     remap_episode_index, remap_task_index = _build_remaps(dataset, records)
+    # built before anything is written: invalid metadata leaves no output
+    provenance = build_provenance(
+        dataset,
+        [episode_index for episode_index, *_ in records],
+        remap_episode_index,
+        remap_task_index,
+        {
+            "fps": fps,
+            "smoothing_cutoff": smoothing_cutoff,
+            "state": state,
+            "arm_dynamics": arm_dynamics,
+            "success_only": success_only,
+            "valid_only": valid_only,
+        },
+        include_sensitive_metadata,
+    )
 
     # save parquet files for each episode (output_dir/data)
     _write_parquet(
@@ -857,6 +880,8 @@ def to_lerobotv21(
         remap_task_index,
         dynamics,
     )
+    # last, so a conversion that fails part-way leaves no provenance record
+    write_provenance(output_dir, provenance)
 
 
 def to_gr00t(
@@ -868,12 +893,14 @@ def to_gr00t(
     success_only: bool = False,
     state: str = "qpos",
     valid_only: bool = False,
+    include_sensitive_metadata: bool = False,
 ) -> None:
     """Convert the given dataset to GR00T LeRobot format.
 
     GR00T LeRobot is LeRobot v2.1 plus a meta/modality.json file describing
     the state/action layout, videos, and annotations. See ``to_lerobotv21``
-    for the ``state`` semantics ("qpos" by default).
+    for the ``state`` semantics ("qpos" by default) and for
+    ``meta/openarm.json`` and ``include_sensitive_metadata``.
     """
     output_dir = Path(output_dir)
     to_lerobotv21(
@@ -887,5 +914,6 @@ def to_gr00t(
         valid_only=valid_only,
         # modality.json does not describe the arm dynamics yet.
         arm_dynamics=False,
+        include_sensitive_metadata=include_sensitive_metadata,
     )
     _write_modality_json(dataset, output_dir, state)

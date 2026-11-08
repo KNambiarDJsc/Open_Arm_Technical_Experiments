@@ -40,6 +40,7 @@ from .lerobot_v21 import (
     _get_image_name_from_key,
 )
 from .ffmpeg import encode_mp4
+from .provenance import build_provenance, write_provenance
 
 CODEBASE_VERSION = "v3.0"
 DATA_FILES_SIZE_IN_MB = 100
@@ -595,12 +596,14 @@ def to_lerobotv30(
     state: str = "qpos",
     valid_only: bool = False,
     arm_dynamics: bool = False,
+    include_sensitive_metadata: bool = False,
 ) -> None:
     """Convert the given dataset to LeRobot v3.0 format.
 
     The arm state is exported in the ``state`` representation ("qpos" by
     default), converted on the fly when the dataset recorded another one.
-    See ``to_lerobotv21`` for ``arm_dynamics`` and ``smoothing_cutoff``.
+    See ``to_lerobotv21`` for ``arm_dynamics``, ``smoothing_cutoff``,
+    ``meta/openarm.json`` and ``include_sensitive_metadata``.
     """
     if not (0.0 <= train_split <= 1.0):
         raise ValueError(f"train_split must be between 0 and 1, got {train_split}")
@@ -621,6 +624,22 @@ def to_lerobotv30(
         raise ValueError("No episodes to write.")
 
     remap_episode_index, remap_task_index = _build_remaps(dataset, records)
+    # built before anything is written: invalid metadata leaves no output
+    provenance = build_provenance(
+        dataset,
+        [episode_index for episode_index, *_ in records],
+        remap_episode_index,
+        remap_task_index,
+        {
+            "fps": fps,
+            "smoothing_cutoff": smoothing_cutoff,
+            "state": state,
+            "arm_dynamics": arm_dynamics,
+            "success_only": success_only,
+            "valid_only": valid_only,
+        },
+        include_sensitive_metadata,
+    )
 
     episodes_data_meta, total_frames = _write_packed_parquet(
         dataset,
@@ -660,3 +679,5 @@ def to_lerobotv30(
         remap_task_index,
         dynamics,
     )
+    # last, so a conversion that fails part-way leaves no provenance record
+    write_provenance(output_dir, provenance)

@@ -130,7 +130,9 @@ def survey(out_dir: pathlib.Path, formats: list[str]) -> dict:
             found = {}
             for path, value in leaves:
                 needle = json.dumps(value, ensure_ascii=False)
-                found[path] = sorted(rel for rel, text in texts.items() if needle in text)
+                found[path] = sorted(
+                    rel for rel, text in texts.items() if needle in text
+                )
             result["formats"][f"{fmt}/{options_name}"] = {
                 "files": sorted(texts),
                 "found": found,
