@@ -1,0 +1,65 @@
+﻿E       Failed: DID NOT RAISE ValueError
+tests\test_provenance.py:411: Failed
+E       Failed: DID NOT RAISE ValueError
+tests\test_provenance.py:411: Failed
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v2.1-episodes0-options0]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v2.1-episodes1-options1]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[lerobot_v2.1-episodes2-options2]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[gr00t-episodes0-options0]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[gr00t-episodes1-options1]
+PASSED tests/test_provenance.py::test_failed_conversion_writes_no_provenance[gr00t-episodes2-options2]
+PASSED tests/test_provenance.py::test_cli_include_sensitive_metadata_rejected_for_other_formats[openarm]
+PASSED tests/test_provenance.py::test_cli_include_sensitive_metadata_rejected_for_other_formats[robot_eval_logger]
+FAILED tests/test_provenance.py::test_source_identity_survives_export[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_source_identity_survives_export[gr00t]
+FAILED tests/test_provenance.py::test_dataset_level_identity[lerobot_v2.1] - ...
+FAILED tests/test_provenance.py::test_dataset_level_identity[gr00t] - ModuleN...
+FAILED tests/test_provenance.py::test_conversion_options_recorded[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_conversion_options_recorded[gr00t] - Mo...
+FAILED tests/test_provenance.py::test_same_source_at_another_rate_keeps_source_identity
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v2.1-all] - Mod...
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v2.1-success_only]
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v2.1-valid_only]
+FAILED tests/test_provenance.py::test_episode_mapping[lerobot_v2.1-success_and_valid_only]
+FAILED tests/test_provenance.py::test_episode_mapping[gr00t-all] - ModuleNotF...
+FAILED tests/test_provenance.py::test_episode_mapping[gr00t-success_only] - M...
+FAILED tests/test_provenance.py::test_episode_mapping[gr00t-valid_only] - Mod...
+FAILED tests/test_provenance.py::test_episode_mapping[gr00t-success_and_valid_only]
+FAILED tests/test_provenance.py::test_filtered_episodes_are_not_listed[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_filtered_episodes_are_not_listed[gr00t]
+FAILED tests/test_provenance.py::test_mapping_matches_exported_data[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_mapping_matches_exported_data[gr00t] - ...
+FAILED tests/test_provenance.py::test_numeric_noncontiguous_ids[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_numeric_noncontiguous_ids[gr00t] - Modu...
+FAILED tests/test_provenance.py::test_duplicate_source_ids_stay_distinguishable
+FAILED tests/test_provenance.py::test_sensitive_fields_withheld_by_default[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_sensitive_fields_withheld_by_default[gr00t]
+FAILED tests/test_provenance.py::test_sensitive_fields_opt_in[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_sensitive_fields_opt_in[gr00t] - TypeEr...
+FAILED tests/test_provenance.py::test_unknown_episode_and_task_fields_withheld
+FAILED tests/test_provenance.py::test_dataset_without_sensitive_fields - Type...
+FAILED tests/test_provenance.py::test_missing_optional_fields_are_not_fabricated
+FAILED tests/test_provenance.py::test_unversioned_dataset - ModuleNotFoundErr...
+FAILED tests/test_provenance.py::test_yaml_dates_are_written_as_iso_strings
+FAILED tests/test_provenance.py::test_unrepresentable_metadata_fails_before_writing[\x00\x01]
+FAILED tests/test_provenance.py::test_unrepresentable_metadata_fails_before_writing[nan]
+FAILED tests/test_provenance.py::test_provenance_is_deterministic[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_provenance_is_deterministic[gr00t] - Fi...
+FAILED tests/test_provenance.py::test_source_metadata_is_not_mutated - TypeEr...
+FAILED tests/test_provenance.py::test_only_the_sidecar_is_added[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_only_the_sidecar_is_added[gr00t] - Asse...
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[unknown-schema-version]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[no-episodes]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[no-source]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[episode-without-source-id]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[non-integer-index]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[out-of-order]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[duplicate-source-index]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_malformed[count-differs-from-info]
+FAILED tests/test_provenance.py::test_load_provenance_rejects_invalid_json - ...
+FAILED tests/test_provenance.py::test_load_provenance_without_sidecar - Modul...
+FAILED tests/test_provenance.py::test_lerobot_loads_export_with_provenance[lerobot_v2.1]
+FAILED tests/test_provenance.py::test_lerobot_loads_export_with_provenance[gr00t]
+FAILED tests/test_provenance.py::test_cli_include_sensitive_metadata[False]
+FAILED tests/test_provenance.py::test_cli_include_sensitive_metadata[True] - ...
+52 failed, 8 passed, 18 deselected in 49.95s

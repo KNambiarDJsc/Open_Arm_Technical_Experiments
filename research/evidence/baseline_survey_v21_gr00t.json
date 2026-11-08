@@ -1,0 +1,214 @@
+{
+  "source": "<OUT_DIR>/source",
+  "formats": {
+    "lerobot_v2.1/all": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "data/chunk-000/episode_000002.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    },
+    "lerobot_v2.1/success_only": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    },
+    "lerobot_v2.1/valid_only": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    },
+    "gr00t/all": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "data/chunk-000/episode_000002.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/modality.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    },
+    "gr00t/success_only": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/modality.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    },
+    "gr00t/valid_only": {
+      "files": [
+        "data/chunk-000/episode_000000.parquet",
+        "data/chunk-000/episode_000001.parquet",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/info.json",
+        "meta/modality.json",
+        "meta/stats.json",
+        "meta/tasks.jsonl"
+      ],
+      "found": {
+        "episodes[0].id": [],
+        "episodes[1].id": [],
+        "episodes[2].id": [],
+        "equipment.embodiments.arms.id": [],
+        "equipment.embodiments.lifter.home": [],
+        "equipment.embodiments.lifter.id": [],
+        "equipment.embodiments.lifter.mechanism": [],
+        "equipment.embodiments.lifter.unit": [],
+        "equipment.id": [],
+        "equipment.leader.ker.firmware_version": [],
+        "equipment.leader.ker.id": [],
+        "equipment.version": [],
+        "location": [],
+        "operation_type": [],
+        "operator": [],
+        "site_notes": [],
+        "tasks[0].description": [],
+        "tasks[0].prompt": [
+          "meta/episodes.jsonl",
+          "meta/tasks.jsonl"
+        ]
+      }
+    }
+  }
+}
