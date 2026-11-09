@@ -48,6 +48,7 @@ import pyarrow
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
 FIXTURE = REPO / "tests" / "fixture" / "dataset_0.3.0"
+UNVERSIONED = REPO / "tests" / "fixture" / "dataset_unversioned"
 NAN_REL = pathlib.Path("episodes/0/obs/arms/left/state.parquet")
 ABORT_MESSAGE = "terminate called without an active exception"
 # Imported by every child through PYTHONPATH. An aborting process would
@@ -91,10 +92,17 @@ def _prepare(work: pathlib.Path) -> dict:
     df["qpos"] = values
     df.to_parquet(path)
     parquet = sorted(str(p) for p in source.rglob("*.parquet"))
+    unversioned = work / "unversioned"
+    shutil.copytree(UNVERSIONED, unversioned)
     guard = work / "guard"
     guard.mkdir()
     (guard / "sitecustomize.py").write_text(DUMP_GUARD)
-    return {"source": str(source), "parquet": parquet, "guard": str(guard)}
+    return {
+        "source": str(source),
+        "unversioned": str(unversioned),
+        "parquet": parquet,
+        "guard": str(guard),
+    }
 
 
 def _command(case: str, inputs: dict, run_dir: pathlib.Path):
@@ -111,6 +119,29 @@ def _command(case: str, inputs: dict, run_dir: pathlib.Path):
             read="pq.read_table(path).to_pandas()",
         )
         return [py, "-c", code, *inputs["parquet"]], None
+    if case == "pyarrow-fileobj-read":
+        code = READ_ALL.format(
+            imports="import pyarrow.parquet as pq",
+            read="pq.read_table(open(path, 'rb')).to_pandas()",
+        )
+        return [py, "-c", code, *inputs["parquet"]], None
+    if case == "pandas-read-no-prebuffer":
+        code = READ_ALL.format(
+            imports="import pandas as pd",
+            read="pd.read_parquet(path, pre_buffer=False)",
+        )
+        return [py, "-c", code, *inputs["parquet"]], None
+    if case == "convert-lerobot-cli":
+        output = run_dir / "out"
+        argv = [py, "-m", "openarm_dataset.convert", inputs["source"], str(output)]
+        argv += ["--format", "lerobot_v2.1"]
+        return argv, lambda out: (output / "meta" / "info.json").exists()
+    if case == "convert-openarm-upgrade-cli":
+        output = run_dir / "out"
+        return (
+            [py, "-m", "openarm_dataset.convert", inputs["unversioned"], str(output)],
+            lambda out: (output / "metadata.yaml").exists(),
+        )
     if case == "sample":
         return [py, "-c", SAMPLE, inputs["source"]], lambda out: "sampled" in out
     if case == "repair-cli":
