@@ -130,8 +130,24 @@ def main():
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--include-sensitive-metadata",
+        help="Also record the dataset's operator and location in "
+        "meta/openarm.json if the output format is lerobot_v2.1, "
+        "lerobot_v3.0 or gr00t (default: withheld)",
+        action="store_true",
+        default=False,
+    )
 
     args = parser.parse_args()
+    if (
+        args.format not in ("lerobot_v2.1", "lerobot_v3.0", "gr00t")
+        and args.include_sensitive_metadata
+    ):
+        parser.error(
+            "--include-sensitive-metadata applies only to the lerobot_v2.1, "
+            "lerobot_v3.0 and gr00t formats"
+        )
     if args.format not in ("lerobot_v2.1", "lerobot_v3.0") and args.arm_dynamics:
         parser.error(
             "--arm-dynamics applies only to the lerobot_v2.1 and lerobot_v3.0 formats"
@@ -159,6 +175,7 @@ def main():
         write_kwargs["smoothing_cutoff"] = args.smoothing_cutoff
         write_kwargs["train_split"] = args.train_split
         write_kwargs["success_only"] = args.success_only
+        write_kwargs["include_sensitive_metadata"] = args.include_sensitive_metadata
         # Fall back to the writers' qpos default when --state is not given.
         if args.state is not None:
             write_kwargs["state"] = args.state

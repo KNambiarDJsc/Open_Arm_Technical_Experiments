@@ -1,0 +1,8 @@
+SKIPPED [1] tests/test_robot_eval_logger.py:17: could not import 'lz4': No module named 'lz4'
+SKIPPED [1] tests/test_rrd.py:17: could not import 'rerun': No module named 'rerun'
+SKIPPED [1] tests/test_lerobot_v21.py:230: lerobot >= 0.5.0 no longer loads v2.1 datasets
+SKIPPED [1] tests/test_lerobot_v21.py:257: lerobot >= 0.5.0 no longer loads v2.1 datasets
+SKIPPED [1] tests/test_lerobot_v30.py:273: ffprobe not available
+SKIPPED [1] tests/test_provenance.py:598: lerobot 0.7.0 does not read lerobot_v2.1
+SKIPPED [1] tests/test_provenance.py:598: lerobot 0.7.0 does not read gr00t
+368 passed, 7 skipped in 136.28s (0:02:16)
