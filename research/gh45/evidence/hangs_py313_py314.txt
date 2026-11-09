@@ -1,0 +1,21 @@
+Preliminary, uncontrolled observation (2026-11-09).
+
+Harness: exit_abort_stress.py before hang detection existed (300 s timeout,
+the first timeout stopped the whole run). Case: pandas-read, 16 parallel,
+pyarrow 26.0.1, pandas 2.3.3, uv-managed (python-build-standalone) CPython.
+
+- CPython 3.13.15: a child running `pd.read_parquet` over the fixture files
+  did not exit within 300 s (a normal run takes about 2 s).
+- CPython 3.14.7: same.
+
+Each run stopped at its first hang, so neither the hang rate nor the number
+of completed/aborted runs before it was recorded. Thread states were not
+captured. Control: uv-managed CPython 3.12.14 aborted 47/1000 like Ubuntu's
+3.12.3 (41/1000), with no hang (stress_managed_py3.12.json,
+stress_system_py3.12.json), so the build is not what changes the outcome.
+
+The raw TimeoutExpired lines:
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/home/hp/.venvs/gh45-py3.13/bin/python', '-c', '\nimport sys\nimport pan
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/home/hp/.venvs/gh45-py3.14/bin/python', '-c', '\nimport sys\nimport pan

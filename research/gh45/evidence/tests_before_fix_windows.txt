@@ -1,0 +1,25 @@
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.1.0\\episodes\\0\\obs\\arms\\right\\qpos.pa
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.2.0\\episodes\\0\\obs\\arms\\right\\qpos.pa
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.3.0\\episodes\\0\\obs\\arms\\right\\state.p
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.4.0_pose\\episodes\\0\\obs\\arms\\right\\st
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.4.0_qpos\\episodes\\0\\obs\\arms\\right\\st
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_unversioned\\episodes\\0\\obs\\right_arm\\qpo
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_unversioned\\episodes\\0\\action\\right_arm\\
+E       AssertionError: read through Python file objects: [<_io.BufferedReader name='C:\\Users\\HP\\openarm-work\\openarm_dataset\\tests\\fixture\\dataset_0.1.0\\episodes\\0\\action\\arms\\right\\qpos
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_0.1.0]
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_0.2.0]
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_0.3.0]
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_0.4.0_pose]
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_0.4.0_qpos]
+FAILED tests/test_parquet_reads.py::test_sample_reads_by_path[dataset_unversioned]
+FAILED tests/test_parquet_reads.py::test_format_upgrade_reads_by_path[dataset_unversioned]
+FAILED tests/test_parquet_reads.py::test_format_upgrade_reads_by_path[dataset_0.1.0]
+FAILED tests/test_parquet_reads.py::test_repair_reads_by_path - OSError: [Win...
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_0.1.0]
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_0.2.0]
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_0.3.0]
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_0.4.0_pose]
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_0.4.0_qpos]
+FAILED tests/test_parquet_reads.py::test_read_matches_pandas[dataset_unversioned]
+FAILED tests/test_parquet_reads.py::test_read_accepts_str_and_path - ModuleNo...
+16 failed in 9.95s

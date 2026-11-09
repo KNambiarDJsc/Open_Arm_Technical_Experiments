@@ -1,0 +1,44 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "python_build": "main, Sep  1 2026, 14:16:52",
+    "executable": "/home/hp/.venvs/gh45-managed-py3.12/bin/python",
+    "pyarrow": "26.0.1",
+    "pandas": "2.3.3",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "cpus": 16
+  },
+  "results": [
+    {
+      "case": "pandas-read",
+      "code": "installed",
+      "runs": 1000,
+      "jobs": 16,
+      "timeout_seconds": 60.0,
+      "seconds": 115.2,
+      "outcomes": {
+        "ok": 953,
+        "SIGABRT: terminate without active exception": 47
+      },
+      "failure_rate": 0.047,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 47
+      }
+    },
+    {
+      "case": "pyarrow-path-read",
+      "code": "installed",
+      "runs": 1000,
+      "jobs": 16,
+      "timeout_seconds": 60.0,
+      "seconds": 121.4,
+      "outcomes": {
+        "ok": 1000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    }
+  ]
+}
