@@ -48,7 +48,7 @@ import pyarrow
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
 FIXTURE = REPO / "tests" / "fixture" / "dataset_0.3.0"
-NAN_REL = pathlib.Path("episodes/0/obs/arms/left/qpos.parquet")
+NAN_REL = pathlib.Path("episodes/0/obs/arms/left/state.parquet")
 ABORT_MESSAGE = "terminate called without an active exception"
 
 READ_ALL = """
@@ -71,13 +71,15 @@ def _prepare(work: pathlib.Path) -> dict:
     """Create the shared, read-only inputs every run uses."""
     source = work / "source"
     shutil.copytree(FIXTURE, source)
-    # One isolated NaN, so that repair actually rewrites a file.
+    # One isolated NaN, so that repair rewrites a file.
     path = source / NAN_REL
+    # Same injection as tests/test_repair.py: a NaN inside the qpos list.
     df = pd.read_parquet(path)
-    column = [c for c in df.columns if c != "timestamp"][0]
-    values = df[column].tolist()
-    values[1] = float("nan")
-    df[column] = values
+    values = df["qpos"].tolist()
+    item = list(values[5])
+    item[0] = float("nan")
+    values[5] = item
+    df["qpos"] = values
     df.to_parquet(path)
     parquet = sorted(str(p) for p in source.rglob("*.parquet"))
     return {"source": str(source), "parquet": parquet}
