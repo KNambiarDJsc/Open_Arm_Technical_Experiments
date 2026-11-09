@@ -1,0 +1,98 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "pyarrow": "26.0.1",
+    "pandas": "2.3.3",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "cpus": 16
+  },
+  "results": [
+    {
+      "case": "pandas-read",
+      "code": "installed",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 39.8,
+      "outcomes": {
+        "SIGABRT: terminate without active exception": 9,
+        "ok": 291
+      },
+      "failure_rate": 0.03,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 9
+      }
+    },
+    {
+      "case": "pyarrow-path-read",
+      "code": "installed",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 40.3,
+      "outcomes": {
+        "ok": 300
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "repair-cli",
+      "code": "/tmp/gh45-variants/revert-repair",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 85.4,
+      "outcomes": {
+        "SIGABRT: terminate without active exception": 10,
+        "ok": 290
+      },
+      "failure_rate": 0.03333333333333333,
+      "failed_after_finishing_work": 10,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 10
+      }
+    },
+    {
+      "case": "repair-cli",
+      "code": "installed",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 97.1,
+      "outcomes": {
+        "ok": 300
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "sample",
+      "code": "installed",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 99.0,
+      "outcomes": {
+        "ok": 298,
+        "SIGABRT: terminate without active exception": 2
+      },
+      "failure_rate": 0.006666666666666667,
+      "failed_after_finishing_work": 1,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 2
+      }
+    },
+    {
+      "case": "convert-openarm-cli",
+      "code": "installed",
+      "runs": 300,
+      "jobs": 16,
+      "seconds": 88.0,
+      "outcomes": {
+        "ok": 300
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    }
+  ]
+}

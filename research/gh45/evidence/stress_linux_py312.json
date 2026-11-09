@@ -1,0 +1,195 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "pyarrow": "26.0.1",
+    "pandas": "2.3.3",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "cpus": 16
+  },
+  "results": [
+    {
+      "case": "pandas-read",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 228.9,
+      "outcomes": {
+        "SIGABRT: terminate without active exception": 120,
+        "ok": 1880
+      },
+      "failure_rate": 0.06,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 120
+      }
+    },
+    {
+      "case": "pyarrow-fileobj-read",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 229.1,
+      "outcomes": {
+        "SIGABRT: terminate without active exception": 139,
+        "ok": 1861
+      },
+      "failure_rate": 0.0695,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 139
+      }
+    },
+    {
+      "case": "pandas-read-no-prebuffer",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 234.1,
+      "outcomes": {
+        "ok": 1938,
+        "SIGABRT: terminate without active exception": 62
+      },
+      "failure_rate": 0.031,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 62
+      }
+    },
+    {
+      "case": "pyarrow-path-read",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 254.5,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "repair-cli",
+      "code": "/tmp/gh45-variants/revert-repair",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 575.6,
+      "outcomes": {
+        "SIGABRT: terminate without active exception": 79,
+        "ok": 1921
+      },
+      "failure_rate": 0.0395,
+      "failed_after_finishing_work": 76,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 79
+      }
+    },
+    {
+      "case": "repair-cli",
+      "code": "/tmp/gh45-variants/main",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 562.4,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "repair-cli",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 562.7,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "sample",
+      "code": "/tmp/gh45-variants/main",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 599.8,
+      "outcomes": {
+        "ok": 1980,
+        "SIGABRT: terminate without active exception": 20
+      },
+      "failure_rate": 0.01,
+      "failed_after_finishing_work": 17,
+      "stderr_last_lines": {
+        "terminate called without an active exception": 20
+      }
+    },
+    {
+      "case": "sample",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 605.8,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "convert-lerobot-cli",
+      "code": "/tmp/gh45-variants/main",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 948.4,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "convert-lerobot-cli",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 975.4,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "convert-openarm-upgrade-cli",
+      "code": "/tmp/gh45-variants/main",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 618.3,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    },
+    {
+      "case": "convert-openarm-upgrade-cli",
+      "code": "installed",
+      "runs": 2000,
+      "jobs": 16,
+      "seconds": 584.6,
+      "outcomes": {
+        "ok": 2000
+      },
+      "failure_rate": 0.0,
+      "failed_after_finishing_work": 0,
+      "stderr_last_lines": {}
+    }
+  ]
+}

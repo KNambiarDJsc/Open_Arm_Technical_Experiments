@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Check that the provenance change leaves every other export file unchanged.
+"""Check that a change leaves every export file unchanged.
 
 Two steps, run once with the upstream code and once with the change::
 
@@ -22,8 +22,10 @@ Two steps, run once with the upstream code and once with the change::
 
 ``export`` writes the representative dataset of ``survey_exports.py`` in
 every FORMAT under four episode selections. ``compare`` reports, for every
-file in either tree, whether the bytes are identical; ``meta/openarm.json``
-is expected only in OUT_B.
+file in either tree, whether the bytes are identical. ``meta/openarm.json``
+(GH-71) may be added; nothing else may differ. The unversioned and 0.1.0
+fixtures are also written in the current OpenArm format, which rewrites
+their parquet files.
 """
 
 from __future__ import annotations
@@ -53,6 +55,9 @@ def export(out_dir: pathlib.Path, formats: list[str]) -> None:
     if out_dir.exists():
         shutil.rmtree(out_dir)
     source = build_source(out_dir / "source")
+    fixtures = pathlib.Path(__file__).resolve().parents[2] / "tests" / "fixture"
+    for name in ("dataset_unversioned", "dataset_0.1.0"):
+        Dataset(fixtures / name).write(out_dir / f"openarm-upgrade-{name}")
     for fmt in formats:
         for name, options in SELECTIONS.items():
             Dataset(source).write(
