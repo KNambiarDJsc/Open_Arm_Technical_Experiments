@@ -50,6 +50,15 @@ REPO = pathlib.Path(__file__).resolve().parents[2]
 FIXTURE = REPO / "tests" / "fixture" / "dataset_0.3.0"
 NAN_REL = pathlib.Path("episodes/0/obs/arms/left/state.parquet")
 ABORT_MESSAGE = "terminate called without an active exception"
+# Imported by every child through PYTHONPATH. An aborting process would
+# otherwise write a core dump; under WSL2 each one is a ~1.3 GB file in the
+# Windows temp directory. A non-dumpable process writes none, whatever the
+# kernel's core_pattern, and the flag does not change how the process exits.
+DUMP_GUARD = """
+import ctypes, sys
+if sys.platform == "linux":
+    ctypes.CDLL(None).prctl(4, 0, 0, 0, 0)  # PR_SET_DUMPABLE, 0
+"""
 
 READ_ALL = """
 import sys
@@ -82,7 +91,10 @@ def _prepare(work: pathlib.Path) -> dict:
     df["qpos"] = values
     df.to_parquet(path)
     parquet = sorted(str(p) for p in source.rglob("*.parquet"))
-    return {"source": str(source), "parquet": parquet}
+    guard = work / "guard"
+    guard.mkdir()
+    (guard / "sitecustomize.py").write_text(DUMP_GUARD)
+    return {"source": str(source), "parquet": parquet, "guard": str(guard)}
 
 
 def _command(case: str, inputs: dict, run_dir: pathlib.Path):
@@ -137,8 +149,7 @@ def _run_once(case, src, inputs, scratch, index):
     run_dir = pathlib.Path(tempfile.mkdtemp(dir=scratch, prefix=f"{index}-"))
     argv, check = _command(case, inputs, run_dir)
     env = dict(os.environ)
-    if src:
-        env["PYTHONPATH"] = src
+    env["PYTHONPATH"] = os.pathsep.join(p for p in (inputs["guard"], src) if p)
     try:
         result = subprocess.run(
             argv, capture_output=True, text=True, env=env, timeout=300
@@ -200,7 +211,11 @@ def main():
             case, _, src = spec.partition("@")
             result = measure(case, src or None, inputs, scratch, args.runs, args.jobs)
             results.append(result)
+            _save(args.out, results)
             print(json.dumps(result), flush=True)
+
+
+def _save(out: pathlib.Path, results: list) -> None:
     environment = {
         "python": sys.version.split()[0],
         "pyarrow": pyarrow.__version__,
@@ -208,7 +223,7 @@ def main():
         "platform": platform.platform(),
         "cpus": os.cpu_count(),
     }
-    args.out.write_text(
+    out.write_text(
         json.dumps({"environment": environment, "results": results}, indent=2)
     )
 
