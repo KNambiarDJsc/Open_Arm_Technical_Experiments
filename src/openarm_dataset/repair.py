@@ -28,8 +28,7 @@ import tempfile
 
 import numpy as np
 import pandas as pd
-import pyarrow.parquet as pq
-
+from ._parquet import read_parquet
 from .dataset import Dataset
 
 
@@ -125,10 +124,7 @@ def _repair_parquet(path: pathlib.Path) -> tuple[int, int]:
         A ``(num_repaired, num_unrepairable)`` tuple.
 
     """
-    # Read by path, not through pandas: pd.read_parquet opens local files as Python
-    # file objects, and pyarrow can still be releasing one on a worker thread when
-    # the interpreter exits, which aborts the process.
-    df = pq.read_table(path).to_pandas()
+    df = read_parquet(path)
     total_repaired = 0
     total_unrepairable = 0
     changed = False

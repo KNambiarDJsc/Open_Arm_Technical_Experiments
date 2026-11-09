@@ -24,6 +24,7 @@ import pyarrow.parquet as pq
 import pandas as pd
 import scipy.signal as signal
 
+from ._parquet import read_parquet
 from .camera import Camera
 from .metadata import Metadata, OpenArm
 from .sampler import Sampler, Sample
@@ -656,7 +657,7 @@ class Dataset:
             smoothing or state conversion is applied.
 
         """
-        df = pd.read_parquet(attribute["path"])
+        df = read_parquet(attribute["path"])
         if attribute["path"].name == "state.parquet":
             column_name = attribute["name"]
             drop_columns = [c for c in df.columns if c != "timestamp"]
@@ -798,7 +799,7 @@ class Dataset:
                             f"this component."
                         )
                     new_path.parent.mkdir(parents=True, exist_ok=True)
-                    df = pd.read_parquet(attribute["path"])
+                    df = read_parquet(attribute["path"])
                     # No version and 0.1.0 use "positions"
                     if "positions" in df:
                         df["value"] = df["positions"]
@@ -809,7 +810,7 @@ class Dataset:
                     continue
                 new_path = base_path / f"{name}.parquet"
                 new_path.parent.mkdir(parents=True, exist_ok=True)
-                df = pd.read_parquet(attribute["path"])
+                df = read_parquet(attribute["path"])
                 # No version and 0.1.0 use "positions"
                 if "positions" in df:
                     df["value"] = df["positions"]
