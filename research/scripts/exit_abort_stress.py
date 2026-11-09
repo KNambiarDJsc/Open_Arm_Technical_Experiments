@@ -176,24 +176,50 @@ def _classify(returncode: int, stderr: str) -> str:
     return f"exit {returncode}"
 
 
-def _run_once(case, src, inputs, scratch, index):
+def _threads(pid: int) -> list[str]:
+    """Describe each thread of a live process from /proc (no debugger needed)."""
+    described = []
+    for task in sorted(pathlib.Path(f"/proc/{pid}/task").glob("*")):
+        try:
+            stat = (task / "stat").read_text()
+            state = stat[stat.rindex(")") + 2]
+            wchan = (task / "wchan").read_text().strip() or "-"
+            syscall = (task / "syscall").read_text().split()[0]
+        except (OSError, IndexError):
+            continue
+        described.append(f"{state}:{wchan}:syscall={syscall}")
+    return described
+
+
+def _run_once(case, src, inputs, scratch, index, timeout):
     run_dir = pathlib.Path(tempfile.mkdtemp(dir=scratch, prefix=f"{index}-"))
     argv, check = _command(case, inputs, run_dir)
     env = dict(os.environ)
     env["PYTHONPATH"] = os.pathsep.join(p for p in (inputs["guard"], src) if p)
     try:
-        result = subprocess.run(
-            argv, capture_output=True, text=True, env=env, timeout=300
+        process = subprocess.Popen(
+            argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env
         )
-        outcome = _classify(result.returncode, result.stderr)
-        did_work = None if check is None else bool(check(result.stdout))
-        stderr_tail = result.stderr.strip().splitlines()[-1:] if outcome != "ok" else []
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # Hung: record what every thread is blocked in, then kill it.
+            threads = _threads(process.pid)
+            process.kill()
+            stdout, stderr = process.communicate()
+            summary = collections.Counter(threads)
+            detail = ", ".join(f"{n}x {t}" for t, n in summary.most_common())
+            did_work = None if check is None else bool(check(stdout))
+            return "hang", did_work, [f"{len(threads)} threads: {detail}"]
+        outcome = _classify(process.returncode, stderr)
+        did_work = None if check is None else bool(check(stdout))
+        stderr_tail = stderr.strip().splitlines()[-1:] if outcome != "ok" else []
     finally:
         shutil.rmtree(run_dir, ignore_errors=True)
     return outcome, did_work, stderr_tail
 
 
-def measure(case, src, inputs, scratch, runs, jobs) -> dict:
+def measure(case, src, inputs, scratch, runs, jobs, timeout=60) -> dict:
     """Run ``case`` ``runs`` times with ``jobs`` concurrent processes."""
     outcomes = collections.Counter()
     worked_then_failed = 0
@@ -201,7 +227,8 @@ def measure(case, src, inputs, scratch, runs, jobs) -> dict:
     start = time.monotonic()
     with concurrent.futures.ThreadPoolExecutor(jobs) as pool:
         futures = [
-            pool.submit(_run_once, case, src, inputs, scratch, i) for i in range(runs)
+            pool.submit(_run_once, case, src, inputs, scratch, i, timeout)
+            for i in range(runs)
         ]
         for future in concurrent.futures.as_completed(futures):
             outcome, did_work, tail = future.result()
@@ -209,13 +236,14 @@ def measure(case, src, inputs, scratch, runs, jobs) -> dict:
             if outcome != "ok" and did_work:
                 worked_then_failed += 1
             for line in tail:
-                examples[line[:160]] += 1
+                examples[line[:300]] += 1
     failures = runs - outcomes["ok"]
     return {
         "case": case,
         "code": src or "installed",
         "runs": runs,
         "jobs": jobs,
+        "timeout_seconds": timeout,
         "seconds": round(time.monotonic() - start, 1),
         "outcomes": dict(outcomes),
         "failure_rate": failures / runs,
@@ -230,6 +258,12 @@ def main():
     parser.add_argument("--runs", type=int, default=1000)
     parser.add_argument("--jobs", type=int, default=os.cpu_count())
     parser.add_argument("--out", type=pathlib.Path, required=True)
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=60,
+        help="seconds before a run counts as hung (a normal run takes ~2 s)",
+    )
     parser.add_argument("cases", nargs="+")
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix="gh45-") as tmp:
@@ -240,7 +274,9 @@ def main():
         results = []
         for spec in args.cases:
             case, _, src = spec.partition("@")
-            result = measure(case, src or None, inputs, scratch, args.runs, args.jobs)
+            result = measure(
+                case, src or None, inputs, scratch, args.runs, args.jobs, args.timeout
+            )
             results.append(result)
             _save(args.out, results)
             print(json.dumps(result), flush=True)
@@ -249,6 +285,8 @@ def main():
 def _save(out: pathlib.Path, results: list) -> None:
     environment = {
         "python": sys.version.split()[0],
+        "python_build": sys.version.split("(", 1)[-1].split(")")[0],
+        "executable": sys.executable,
         "pyarrow": pyarrow.__version__,
         "pandas": pd.__version__,
         "platform": platform.platform(),
