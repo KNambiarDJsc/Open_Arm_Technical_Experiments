@@ -7,7 +7,8 @@ into training formats (LeRobot v2.1/v3.0, GR00T, Rerun).
 
 This repository is a copy of upstream at
 [`3d291fe`](https://github.com/enactic/openarm_dataset/commit/3d291fe8a71153de03d76ca9a70c4fdb88fc1929)
-(2026-11-04), with each experiment on its own branch. It is personal
+(2026-11-04) with both experiments merged into `main`. Each experiment is
+also kept on its own branch, based directly on upstream. It is personal
 research. It is **not affiliated with or endorsed by Enactic**, and
 nothing here has been submitted upstream. The upstream code is
 Apache-2.0 (see [LICENSE.txt](LICENSE.txt)); its original README is
@@ -16,7 +17,7 @@ Apache-2.0 (see [LICENSE.txt](LICENSE.txt)); its original README is
 No OpenArm hardware was used. All experiments run on the repository's
 recorded test fixtures.
 
-## 1. Export provenance: issue #71 (branch [`gh71-provenance`](../../tree/gh71-provenance))
+## 1. Export provenance: issue #71
 
 **Question.** What metadata is lost when an OpenArm recording is
 converted into LeRobot or GR00T training data, and can it be kept
@@ -38,17 +39,17 @@ Operator and location are withheld unless opted in. 78 regression tests;
 every other export file is byte-identical to upstream in all three formats.
 
 **Read:**
-[TECHNICAL_ARTICLE.md](../../blob/gh71-provenance/research/TECHNICAL_ARTICLE.md)
+[TECHNICAL_ARTICLE.md](research/TECHNICAL_ARTICLE.md)
 ·
-[PROVENANCE_DESIGN.md](../../blob/gh71-provenance/research/PROVENANCE_DESIGN.md)
+[PROVENANCE_DESIGN.md](research/PROVENANCE_DESIGN.md)
 ·
-[ARCHITECTURE_AUDIT.md](../../blob/gh71-provenance/research/ARCHITECTURE_AUDIT.md)
+[ARCHITECTURE_AUDIT.md](research/ARCHITECTURE_AUDIT.md)
 ·
-[ENGINEERING_REPORT.md](../../blob/gh71-provenance/research/ENGINEERING_REPORT.md)
+[ENGINEERING_REPORT.md](research/ENGINEERING_REPORT.md)
 ·
-[REVIEWER_GUIDE.md](../../blob/gh71-provenance/research/REVIEWER_GUIDE.md)
+[REVIEWER_GUIDE.md](research/REVIEWER_GUIDE.md)
 
-## 2. A crash after the work is done: issue #45 (branch [`gh45-exit-abort`](../../tree/gh45-exit-abort))
+## 2. A crash after the work is done: issue #45
 
 **Question.** Why does `openarm-dataset-repair` occasionally exit with
 SIGABRT ("terminate called without an active exception") in CI, after
@@ -79,19 +80,34 @@ printing that the repair succeeded?
 and deterministic tests that no read goes through a Python file object.
 
 **Read:**
-[TECHNICAL_ARTICLE.md](../../blob/gh45-exit-abort/research/gh45/TECHNICAL_ARTICLE.md)
+[TECHNICAL_ARTICLE.md](research/gh45/TECHNICAL_ARTICLE.md)
 ·
-[evidence/](../../tree/gh45-exit-abort/research/gh45/evidence)
+[evidence/](research/gh45/evidence)
 ·
-[stress harness](../../blob/gh45-exit-abort/research/scripts/exit_abort_stress.py)
+[stress harness](research/scripts/exit_abort_stress.py)
+
+## Layout
+
+| path | experiment |
+|---|---|
+| `src/openarm_dataset/provenance.py`, changes in `lerobot_v21.py`, `lerobot_v30.py`, `convert.py` | #71 |
+| `tests/test_provenance.py` | #71 |
+| `research/*.md`, `research/evidence/` | #71 |
+| `src/openarm_dataset/_parquet.py`, changes in `dataset.py`, `repair.py` | #45 |
+| `tests/test_parquet_reads.py` | #45 |
+| `research/gh45/` | #45 |
+| `research/scripts/` | both |
+
+Branches [`gh71-provenance`](../../tree/gh71-provenance) and
+[`gh45-exit-abort`](../../tree/gh45-exit-abort) hold each experiment alone
+on top of upstream, for comparing against upstream one change at a time.
 
 ## Reproducing
 
 ```bash
-git checkout gh71-provenance     # or gh45-exit-abort
 uv sync -p 3.12 --extra lerobot-dataset-v2.1   # or lerobot-dataset-v3.0 (Linux)
 uv run pytest -rs
 ```
 
-Each branch's `research/` directory lists the exact commands and
-environments behind every number.
+The `research/` documents list the exact commands and environments
+behind every number.
